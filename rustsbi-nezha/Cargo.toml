@@ -1,0 +1,22 @@
+[package]
+name = "rustsbi-nezha"
+version = "0.1.0"
+edition = "2018"
+authers = ["ez4yunfeng2<ez4yunfeng2@stu.hunau.edu.cn>"]
+
+[profile.dev]
+panic = "abort"
+     
+[profile.release]
+panic = "abort"
+
+[dependencies]
+nb = "1"
+rustsbi = "0.2.0-alpha.3"
+bitflags = "1"
+buddy_system_allocator = "0.8"
+lazy_static = { version = "1", features = ["spin_no_std"] }
+riscv = { git = "https://github.com/rust-embedded/riscv", rev = "7e9d2e5b", features = ["inline-asm"] }
+embedded-hal = "1.0.0-alpha.4"
+vcell = "0.1.2"
+r0 = "1.0"
