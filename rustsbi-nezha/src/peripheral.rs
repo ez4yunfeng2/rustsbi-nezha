@@ -38,7 +38,7 @@ pub struct Reset;
 
 impl rustsbi::Reset for Reset {
     fn system_reset(&self, reset_type: usize, reset_reason: usize) -> rustsbi::SbiRet {
-        println!("[rustsbi] reset triggered! todo: shutdown all harts on k210; program halt. Type: {}, reason: {}", reset_type, reset_reason);
+        println!("[rustsbi] reset triggered! todo: shutdown all harts on Nezha; program halt. Type: {}, reason: {}", reset_type, reset_reason);
         loop {}
     }
 }
