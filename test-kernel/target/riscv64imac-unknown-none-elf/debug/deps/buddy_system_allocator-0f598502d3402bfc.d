@@ -1,7 +1,0 @@
-c:\Users\ez4yunfeng2\Desktop\rustsbi-nezha\test-kernel\target\riscv64imac-unknown-none-elf\debug\deps\buddy_system_allocator-0f598502d3402bfc.rmeta: C:\Users\ez4yunfeng2\.cargo\registry\src\mirrors.tuna.tsinghua.edu.cn-df7c3c540f42cdbd\buddy_system_allocator-0.8.0\src\lib.rs C:\Users\ez4yunfeng2\.cargo\registry\src\mirrors.tuna.tsinghua.edu.cn-df7c3c540f42cdbd\buddy_system_allocator-0.8.0\src\frame.rs C:\Users\ez4yunfeng2\.cargo\registry\src\mirrors.tuna.tsinghua.edu.cn-df7c3c540f42cdbd\buddy_system_allocator-0.8.0\src\linked_list.rs
-
-c:\Users\ez4yunfeng2\Desktop\rustsbi-nezha\test-kernel\target\riscv64imac-unknown-none-elf\debug\deps\buddy_system_allocator-0f598502d3402bfc.d: C:\Users\ez4yunfeng2\.cargo\registry\src\mirrors.tuna.tsinghua.edu.cn-df7c3c540f42cdbd\buddy_system_allocator-0.8.0\src\lib.rs C:\Users\ez4yunfeng2\.cargo\registry\src\mirrors.tuna.tsinghua.edu.cn-df7c3c540f42cdbd\buddy_system_allocator-0.8.0\src\frame.rs C:\Users\ez4yunfeng2\.cargo\registry\src\mirrors.tuna.tsinghua.edu.cn-df7c3c540f42cdbd\buddy_system_allocator-0.8.0\src\linked_list.rs
-
-C:\Users\ez4yunfeng2\.cargo\registry\src\mirrors.tuna.tsinghua.edu.cn-df7c3c540f42cdbd\buddy_system_allocator-0.8.0\src\lib.rs:
-C:\Users\ez4yunfeng2\.cargo\registry\src\mirrors.tuna.tsinghua.edu.cn-df7c3c540f42cdbd\buddy_system_allocator-0.8.0\src\frame.rs:
-C:\Users\ez4yunfeng2\.cargo\registry\src\mirrors.tuna.tsinghua.edu.cn-df7c3c540f42cdbd\buddy_system_allocator-0.8.0\src\linked_list.rs:

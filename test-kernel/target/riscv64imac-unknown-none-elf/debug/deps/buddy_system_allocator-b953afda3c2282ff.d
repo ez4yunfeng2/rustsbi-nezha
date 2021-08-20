@@ -1,9 +1,0 @@
-/home/ez4yunfeng2/Desktop/rustsbi-nezha/test-kernel/target/riscv64imac-unknown-none-elf/debug/deps/buddy_system_allocator-b953afda3c2282ff.rmeta: /home/ez4yunfeng2/.cargo/registry/src/mirrors.ustc.edu.cn-61ef6e0cd06fb9b8/buddy_system_allocator-0.8.0/src/lib.rs /home/ez4yunfeng2/.cargo/registry/src/mirrors.ustc.edu.cn-61ef6e0cd06fb9b8/buddy_system_allocator-0.8.0/src/frame.rs /home/ez4yunfeng2/.cargo/registry/src/mirrors.ustc.edu.cn-61ef6e0cd06fb9b8/buddy_system_allocator-0.8.0/src/linked_list.rs
-
-/home/ez4yunfeng2/Desktop/rustsbi-nezha/test-kernel/target/riscv64imac-unknown-none-elf/debug/deps/libbuddy_system_allocator-b953afda3c2282ff.rlib: /home/ez4yunfeng2/.cargo/registry/src/mirrors.ustc.edu.cn-61ef6e0cd06fb9b8/buddy_system_allocator-0.8.0/src/lib.rs /home/ez4yunfeng2/.cargo/registry/src/mirrors.ustc.edu.cn-61ef6e0cd06fb9b8/buddy_system_allocator-0.8.0/src/frame.rs /home/ez4yunfeng2/.cargo/registry/src/mirrors.ustc.edu.cn-61ef6e0cd06fb9b8/buddy_system_allocator-0.8.0/src/linked_list.rs
-
-/home/ez4yunfeng2/Desktop/rustsbi-nezha/test-kernel/target/riscv64imac-unknown-none-elf/debug/deps/buddy_system_allocator-b953afda3c2282ff.d: /home/ez4yunfeng2/.cargo/registry/src/mirrors.ustc.edu.cn-61ef6e0cd06fb9b8/buddy_system_allocator-0.8.0/src/lib.rs /home/ez4yunfeng2/.cargo/registry/src/mirrors.ustc.edu.cn-61ef6e0cd06fb9b8/buddy_system_allocator-0.8.0/src/frame.rs /home/ez4yunfeng2/.cargo/registry/src/mirrors.ustc.edu.cn-61ef6e0cd06fb9b8/buddy_system_allocator-0.8.0/src/linked_list.rs
-
-/home/ez4yunfeng2/.cargo/registry/src/mirrors.ustc.edu.cn-61ef6e0cd06fb9b8/buddy_system_allocator-0.8.0/src/lib.rs:
-/home/ez4yunfeng2/.cargo/registry/src/mirrors.ustc.edu.cn-61ef6e0cd06fb9b8/buddy_system_allocator-0.8.0/src/frame.rs:
-/home/ez4yunfeng2/.cargo/registry/src/mirrors.ustc.edu.cn-61ef6e0cd06fb9b8/buddy_system_allocator-0.8.0/src/linked_list.rs:
