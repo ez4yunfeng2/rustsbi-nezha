@@ -29,6 +29,7 @@ struct Timer;
 impl rustsbi::Timer for Timer {
     fn set_timer(&mut self, stime_value: u64) {
         // This function must clear the pending timer interrupt bit as well.
+        println!("[rustsbi] setTimer");
         use crate::hal::clint::mtimecmp;
         mtimecmp::write(stime_value);
         unsafe { mip::clear_mtimer() };

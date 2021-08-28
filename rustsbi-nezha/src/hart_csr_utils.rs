@@ -18,7 +18,6 @@ pub fn print_hart_csrs() {
     print_misa();
     print_mideleg();
     print_medeleg();
-    print_hart_pmp();
 }
 #[inline]
 fn ctz(mut x:usize) -> usize{
@@ -80,7 +79,7 @@ fn pmp_get(n:usize) -> Option<(usize,usize,usize)>{
     Some((port,addr,log2len))
 }
 
-fn print_hart_pmp(){
+pub fn print_hart_pmp(){
     let mut size;
     for i in 0..PMP_COUNT{
         if let Some((port,addr,l2l)) = pmp_get(i){

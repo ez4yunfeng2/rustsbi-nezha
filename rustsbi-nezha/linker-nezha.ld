@@ -1,5 +1,4 @@
 MEMORY {
-    /* 存储单元的物理地址 */
     SRAM : ORIGIN = 0x40000000,LENGTH = 128M
 }
 

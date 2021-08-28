@@ -1,8 +1,5 @@
-use riscv::register::{
-    mstatus::{self, Mstatus, MPP},
-    mcause::{self, Trap, Exception, Interrupt},
-    mtvec::{self, TrapMode}, mtval,
-};
+use riscv::register::{mcause::{self, Trap, Exception, Interrupt}, mepc, mstatus::{self, Mstatus, MPP}, mtval, mtvec::{self, TrapMode}};
+use rustsbi::println;
 use core::{
     pin::Pin,
     ops::{Generator, GeneratorState},
@@ -53,6 +50,9 @@ impl Generator for Runtime {
     fn resume(mut self: Pin<&mut Self>, _arg: ()) -> GeneratorState<Self::Yield, Self::Return> {
         unsafe { do_resume(&mut self.context as *mut _) };
         let mtval = mtval::read();
+        // if mcause::read().cause() != Trap::Exception(Exception::SupervisorEnvCall){
+        //     println!("[rustsbi] 0x{:x} 0x{:x} {:?}",mtval,mepc::read(),mcause::read().cause());
+        // }
         let trap = match mcause::read().cause() {
             Trap::Exception(Exception::SupervisorEnvCall) => MachineTrap::SbiCall(),
             Trap::Exception(Exception::IllegalInstruction) => MachineTrap::IllegalInstruction(),

@@ -13,6 +13,8 @@ mod hart_csr_utils;
 use core::{panic::PanicInfo};
 use buddy_system_allocator::LockedHeap;
 use rustsbi::println;
+
+use crate::{hal::write_reg, hart_csr_utils::print_hart_pmp};
 extern crate alloc;
 extern crate bitflags;
 const PER_HART_STACK_SIZE: usize = 8 * 1024; // 8KiB
@@ -25,8 +27,7 @@ const SBI_HEAP_SIZE: usize = 8 * 1024; // 8KiB
 static mut HEAP_SPACE: [u8; SBI_HEAP_SIZE] = [0; SBI_HEAP_SIZE];
 #[global_allocator]
 static SBI_HEAP: LockedHeap<32> = LockedHeap::empty();
-//static DEVICE_TREE_BINARY: &[u8] = include_bytes!("../sunxi.dtb");
-static DEVICE_TREE_BINARY: &[u8] = &[1,2,3];
+static DEVICE_TREE_BINARY: &[u8] = include_bytes!("../sunxi.dtb");
 extern "C" fn rust_main() -> ! {
     let hartid = riscv::register::mhartid::read();
     if hartid == 0 {
@@ -36,6 +37,7 @@ extern "C" fn rust_main() -> ! {
     runtime::init();
     if hartid == 0 {
         init_heap();
+        init_plic();
         peripheral::init_peripheral();
         println!("[rustsbi] RustSBI version {}", rustsbi::VERSION);
         println!("{}", rustsbi::LOGO);
@@ -45,9 +47,10 @@ extern "C" fn rust_main() -> ! {
     delegate_interrupt_exception();
     if hartid == 0 {
         hart_csr_utils::print_hart_csrs();
-        println!("[rustsbi] enter supervisor 0x40200000\n");
+        println!("[rustsbi] enter supervisor 0x40200000");
+        print_hart_pmp();
     }
-    execute::execute_supervisor(0x4020_0000, hartid, DEVICE_TREE_BINARY.as_ptr() as usize)
+    execute::execute_supervisor(0x4020_0000, DEVICE_TREE_BINARY.as_ptr() as usize, hartid)
 }
 
 fn init_bss() {
@@ -75,6 +78,15 @@ fn init_pmp(){
     pmpaddr2::write(0x80000000usize >> 2);
     pmpaddr3::write(0xc0000000usize >> 2);
 }
+
+fn init_plic(){
+    unsafe{
+        let mut addr: usize;
+        asm!("csrr {}, 0xfc1", out(reg) addr);
+        write_reg(addr, 0x001ffffc, 0x1)
+    }
+}
+
 fn delegate_interrupt_exception() {
     use riscv::register::{mideleg, medeleg, mie};
     unsafe {
