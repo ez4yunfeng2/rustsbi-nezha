@@ -1,5 +1,3 @@
-use rustsbi::println;
-
 use crate::runtime::SupervisorContext;
 
 #[inline]

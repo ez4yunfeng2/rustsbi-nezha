@@ -2,5 +2,4 @@
 xtask = "run --package xtask --"
 make = "xtask make"
 nezha = "xtask nezha"
-asm = "xtask asm"
-size = "xtask size"
+zcore = "xtask zcore"

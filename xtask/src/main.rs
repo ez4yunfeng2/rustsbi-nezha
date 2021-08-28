@@ -25,21 +25,27 @@ fn main() {
             (about: "Run project on actual board")
             (@arg release: --release "Build artifacts in release mode, with optimizations")
         )
-        (@subcommand detect =>
-            (about: "Detect target serial port")
-        )
-        (@subcommand asm =>
-            (about: "View asm code for project")
-        )
-        (@subcommand size =>
-            (about: "View size for project")
+        (@subcommand zcore =>
+            (about: "run zcore")
+            (@arg release: --release "Build artifacts in release mode, with optimizations")
         )
     ).get_matches();
     let mut xtask_env = XtaskEnv {
         compile_mode: CompileMode::Debug,
     };
     println!("xtask: mode: {:?}", xtask_env.compile_mode);
-    if let Some(matches) = matches.subcommand_matches("nezha") {
+    if let Some(matches) = matches.subcommand_matches("zcore") {
+        if matches.is_present("release") {
+            xtask_env.compile_mode = CompileMode::Release;
+        }
+        xtask_build_sbi(&xtask_env);
+        xtask_binary_sbi(&xtask_env);
+        xtask_fuse_zcore(&xtask_env);
+        xtask_run_nezha(&xtask_env);
+    } else if let Some(_matches) = matches.subcommand_matches("make") {
+        xtask_build_sbi(&xtask_env);
+        xtask_binary_sbi(&xtask_env);
+    } else if let Some(_matches) = matches.subcommand_matches("nezha"){
         if matches.is_present("release") {
             xtask_env.compile_mode = CompileMode::Release;
         }
@@ -48,14 +54,13 @@ fn main() {
         xtask_build_test_kernel(&xtask_env);
         xtask_binary_test_kernel(&xtask_env);
         xtask_fuse_binary(&xtask_env);
+        xtask_fuse_binary(&xtask_env);
         xtask_run_nezha(&xtask_env);
-    } else if let Some(_matches) = matches.subcommand_matches("make") {
-        xtask_build_sbi(&xtask_env);
-        xtask_binary_sbi(&xtask_env);
-    } else  {
+    } else {
         println!("Use `cargo k210` to run, `cargo xtask --help` for help")
     }
 }
+
 fn xtask_run_nezha(xtask_env: &XtaskEnv) {
     let status = Command::new("xfel")
     .current_dir(project_root())
@@ -155,9 +160,24 @@ fn xtask_binary_test_kernel(xtask_env: &XtaskEnv) {
 
 fn xtask_fuse_binary(xtask_env: &XtaskEnv) {
     let sbi_binary_path = dist_dir(xtask_env).join("rustsbi-nezha.bin");
-    let test_kernel_binary_path = dist_dir(xtask_env).join("test-kernel.bin");
+   // let test_kernel_binary_path = dist_dir(xtask_env).join("test-kernel.bin");
+    let test_kernel_binary_path = project_root().join("zcore.bin");
     let output_path = dist_dir(xtask_env).join("nezha-fused.bin");
-    let offset = 0x200000;
+    let offset = 0x20000;
+    fs::copy(sbi_binary_path, &output_path).expect("copy sbi base");
+    let mut output = fs::OpenOptions::new().read(true).write(true).open(output_path)
+        .expect("open output file");
+    let buf = fs::read(test_kernel_binary_path).expect("read kernel binary");
+    output.seek(SeekFrom::Start(offset)).expect("seek to offset");
+    output.write(&buf).expect("write output");
+}
+
+fn xtask_fuse_zcore(xtask_env: &XtaskEnv) {
+    let sbi_binary_path = dist_dir(xtask_env).join("rustsbi-nezha.bin");
+    //let test_kernel_binary_path = dist_dir(xtask_env).join("test-kernel.bin");
+    let test_kernel_binary_path = project_root().join("zcore.bin");
+    let output_path = dist_dir(xtask_env).join("nezha-fused.bin");
+    let offset = 0x20000;
     fs::copy(sbi_binary_path, &output_path).expect("copy sbi base");
     let mut output = fs::OpenOptions::new().read(true).write(true).open(output_path)
         .expect("open output file");

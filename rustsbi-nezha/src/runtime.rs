@@ -1,5 +1,4 @@
-use riscv::register::{mcause::{self, Trap, Exception, Interrupt}, mepc, mstatus::{self, Mstatus, MPP}, mtval, mtvec::{self, TrapMode}};
-use rustsbi::println;
+use riscv::register::{mcause::{self, Trap, Exception, Interrupt}, mstatus::{self, Mstatus, MPP}, mtval, mtvec::{self, TrapMode}};
 use core::{
     pin::Pin,
     ops::{Generator, GeneratorState},

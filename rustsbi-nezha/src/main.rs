@@ -12,7 +12,6 @@ mod execute;
 mod hart_csr_utils;
 use core::{panic::PanicInfo};
 use buddy_system_allocator::LockedHeap;
-use riscv::register::mip;
 use rustsbi::println;
 
 use crate::{hal::write_reg, hart_csr_utils::print_hart_pmp};
@@ -48,10 +47,10 @@ extern "C" fn rust_main() -> ! {
     delegate_interrupt_exception();
     if hartid == 0 {
         hart_csr_utils::print_hart_csrs();
-        println!("[rustsbi] enter supervisor 0x40200000");
+        println!("[rustsbi] enter supervisor 0x40020000");
         print_hart_pmp();
     }
-    execute::execute_supervisor(0x4020_0000, hartid,DEVICE_TREE_BINARY.as_ptr() as usize)
+    execute::execute_supervisor(0x4002_0000, hartid,DEVICE_TREE_BINARY.as_ptr() as usize)
 }
 
 fn init_bss() {
@@ -97,20 +96,6 @@ fn delegate_interrupt_exception() {
         medeleg::set_instruction_misaligned();
         medeleg::set_breakpoint();
         medeleg::set_user_env_call();
-        /* MMU Exception Delegation
-        /* Page Faults are *Reserved* in 1.9.1 version */
-        - medeleg::set_instruction_page_fault();
-        - medeleg::set_load_page_fault();
-        - medeleg::set_store_page_fault();
-        /* Actually, in 1.9.1 they are merged into more general exceptions */
-        + medeleg::set_instruction_fault();
-        + medeleg::set_load_fault();
-        + medeleg::set_store_fault(); */
-        // medeleg::set_instruction_fault();
-        // medeleg::set_load_fault();
-        // medeleg::set_store_fault();
-        // 默认不打开mie::set_mext
-        // 不打开mie::set_mtimer
         mie::set_msoft();
     }
 }
