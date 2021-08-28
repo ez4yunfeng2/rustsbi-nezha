@@ -1,10 +1,11 @@
 pub mod mtimecmp{
     use crate::{hal::{pac_encoding::{CLINT_BASE, MTIMECMPL}, write_reg}};
-    // pub fn read() -> u64{
-    //     unsafe { read_reg::<u64>(CLINT_BASE, MTIMECMPL) }
-    // }
     pub fn write(word:u64) {
-        unsafe { write_reg(CLINT_BASE, MTIMECMPL, word)}
+        unsafe { 
+            let mask = u64::MAX;
+            write_reg(CLINT_BASE, MTIMECMPL, (word & mask) as u32);
+            write_reg(CLINT_BASE, MTIMECMPL + 4, (word >> 32) as u32);
+        }
     }
 }
 pub mod msip{

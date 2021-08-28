@@ -38,6 +38,7 @@ pub fn read_char(){
     loop{
         let c = console_getchar();
         println!("GetChar: [{}]\r",c as u8 as char);
+        
     }
     
 }

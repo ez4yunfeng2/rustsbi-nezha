@@ -12,6 +12,7 @@ mod execute;
 mod hart_csr_utils;
 use core::{panic::PanicInfo};
 use buddy_system_allocator::LockedHeap;
+use riscv::register::mip;
 use rustsbi::println;
 
 use crate::{hal::write_reg, hart_csr_utils::print_hart_pmp};
@@ -37,7 +38,7 @@ extern "C" fn rust_main() -> ! {
     runtime::init();
     if hartid == 0 {
         init_heap();
-        init_plic();
+        init_plic(); 
         peripheral::init_peripheral();
         println!("[rustsbi] RustSBI version {}", rustsbi::VERSION);
         println!("{}", rustsbi::LOGO);
@@ -50,7 +51,7 @@ extern "C" fn rust_main() -> ! {
         println!("[rustsbi] enter supervisor 0x40200000");
         print_hart_pmp();
     }
-    execute::execute_supervisor(0x4020_0000, DEVICE_TREE_BINARY.as_ptr() as usize, hartid)
+    execute::execute_supervisor(0x4020_0000, hartid,DEVICE_TREE_BINARY.as_ptr() as usize)
 }
 
 fn init_bss() {
@@ -90,7 +91,7 @@ fn init_plic(){
 fn delegate_interrupt_exception() {
     use riscv::register::{mideleg, medeleg, mie};
     unsafe {
-        //mideleg::set_sext();
+        mideleg::set_sext();
         mideleg::set_stimer();
         mideleg::set_ssoft();
         medeleg::set_instruction_misaligned();

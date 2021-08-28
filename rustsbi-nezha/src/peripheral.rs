@@ -32,7 +32,10 @@ impl rustsbi::Timer for Timer {
         println!("[rustsbi] setTimer");
         use crate::hal::clint::mtimecmp;
         mtimecmp::write(stime_value);
-        unsafe { mip::clear_mtimer() };
+        unsafe { 
+            mip::clear_mtimer();
+            mip::set_mtimer() 
+        };
     }
 }
 pub struct Reset;

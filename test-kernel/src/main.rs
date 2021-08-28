@@ -22,7 +22,7 @@ static KERNEL_HEAP: LockedHeap<32> = LockedHeap::empty();
 use buddy_system_allocator::LockedHeap;
 
 extern "C" fn rust_main(hartid: usize, opaque: usize) -> ! {
-    if hartid != 0 {
+    if hartid == 0 {
         init_bss();
         init_heap();
     }
@@ -87,7 +87,7 @@ unsafe extern "C" fn entry() -> ! {
     "
     la      sp, {stack}
     li      t0, {per_hart_stack_size}
-    addi    t1, a1, 1
+    addi    t1, a0, 1
 1:  add     sp, sp, t0
     addi    t1, t1, -1
     bnez    t1, 1b
