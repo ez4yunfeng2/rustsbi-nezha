@@ -106,7 +106,7 @@ unsafe fn get_vaddr_u16(vaddr: usize) -> u16 {
 }
 
 fn emulate_sbi_call(ctx: &mut SupervisorContext) -> bool {
-    if feature::emulate_sbi_rustsbi_k210_sext(ctx) {
+    if feature::emulate_sbi_rustsbi_nezha_sext(ctx) {
         return true;
     }
     false

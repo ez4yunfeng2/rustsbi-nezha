@@ -30,7 +30,7 @@ pub unsafe fn call_supervisor_interrupt(ctx: &mut SupervisorContext) {
 // for K210 chip only. This chip uses 1.9.1 version of privileged spec,
 // which did not declare any S-level external interrupts. 
 #[inline]
-pub fn emulate_sbi_rustsbi_k210_sext(ctx: &mut SupervisorContext) -> bool {
+pub fn emulate_sbi_rustsbi_nezha_sext(ctx: &mut SupervisorContext) -> bool {
     if ctx.a7 == 0x0A000004 && ctx.a6 == 0x210 {
         unsafe { DEVINTRENTRY = ctx.a0; }
         // enable mext
